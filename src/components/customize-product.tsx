@@ -110,9 +110,7 @@ const CustomizeProducts = ({
       ))}
       <Add
         productId={productId}
-        variantId={
-          selectedVariant?._id || "00000000-0000-0000-0000-000000000000"
-        }
+        variantId={selectedVariant?._id}
         stockNumber={selectedVariant?.stock?.quantity || 0}
       />
     </div>

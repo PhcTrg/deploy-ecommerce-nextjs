@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { Button } from "@nextui-org/react";
 
-const Add = ({ product, setOpen }: { product: any; setOpen: any }) => {
+interface AddProps {
+  productId: string;
+  variantId?: string;
+  stockNumber: number;
+}
+
+const Add = ({ productId, variantId, stockNumber }: AddProps) => {
   const [quantity, setQuantity] = useState(1);
 
   return (
@@ -15,13 +21,17 @@ const Add = ({ product, setOpen }: { product: any; setOpen: any }) => {
           <button
             onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-lama text-white"
+            disabled={quantity <= 1}
           >
             -
           </button>
           <span>{quantity}</span>
           <button
-            onClick={() => setQuantity((prev) => prev + 1)}
+            onClick={() =>
+              setQuantity((prev) => (prev < stockNumber ? prev + 1 : prev))
+            }
             className="w-8 h-8 flex items-center justify-center rounded-full bg-lama text-white"
+            disabled={quantity >= stockNumber}
           >
             +
           </button>
@@ -30,9 +40,9 @@ const Add = ({ product, setOpen }: { product: any; setOpen: any }) => {
       {/* CART BUTTON */}
       <Button
         className="w-full bg-lama text-white p-2 rounded-md"
-        onClick={() => setOpen(false)}
+        disabled={stockNumber === 0}
       >
-        Add to Cart
+        {stockNumber === 0 ? "Out of Stock" : "Add to Cart"}
       </Button>
     </div>
   );
