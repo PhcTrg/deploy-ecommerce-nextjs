@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Add from "./Add";
+import Add from "./add";
 import { notFound, useRouter } from "next/navigation";
 import productAPIs from "@/api/product";
 import ProductImages from "./product-image";
