@@ -6,6 +6,7 @@ import cartAPIs from "@/api/cart";
 import Link from "next/link";
 import { useDisclosure } from "@nextui-org/react";
 import ResultModal from "@/components/modal/result-modal";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,12 +15,18 @@ const CartPage = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [checkoutSuccess, setCheckoutSuccess] = useState<boolean>(false);
   const [checkoutMessage, setCheckoutMessage] = useState<string>("");
+  const router = useRouter();
 
   const isLoggedIn = localStorage.getItem("token") != null ? true : false;
 
   useEffect(() => {
-    if (isLoggedIn) getCartProducts();
-  }, [isLoggedIn]);
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+
+    fetchOrders();
+  }, [isLoggedIn, router, fetchOrders]);
 
   const getCartProducts = async () => {
     try {

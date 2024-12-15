@@ -2,7 +2,7 @@
 
 import { products } from "@wix/stores";
 import { useEffect, useState } from "react";
-import Add from "./add";
+import Add from "./Add";
 
 const CustomizeProducts = ({
   productId,
