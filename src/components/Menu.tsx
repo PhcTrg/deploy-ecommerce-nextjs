@@ -1,45 +1,41 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import shopAPIs from "@/api/shop";
+import { useState } from "react";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
-  const [hasShop, setHasShop] = useState(false);
   const isLoggedIn = localStorage.getItem("token") != null ? true : false;
 
-  useEffect(() => {
-    if (isLoggedIn) checkShop();
-  }, [isLoggedIn]);
-
-  const checkShop = async () => {
-    try {
-      await shopAPIs.getMyShop();
-      setHasShop(true);
-    } catch (error) {
-      console.log("Error checking shop:", error);
-      setHasShop(false);
-    }
-  };
-
   return (
-    <div className="">
-      <Image
-        src="/menu.png"
-        alt=""
-        width={28}
-        height={28}
-        className="cursor-pointer"
-        onClick={() => setOpen((prev) => !prev)}
-      />
+    <div>
+      {/* MENU BUTTON */}
+      <button
+        className="w-10 h-8 flex flex-col justify-between z-50 relative"
+        onClick={() => setOpen(!open)}
+      >
+        <div className="w-10 h-1 bg-black rounded"></div>
+        <div className="w-10 h-1 bg-black rounded"></div>
+        <div className="w-10 h-1 bg-black rounded"></div>
+      </button>
+
+      {/* MENU LIST */}
       {open && (
-        <div className="absolute bg-black text-white left-0 top-20 w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-8 text-xl z-10">
-          <Link href="/">Home</Link>
-          <Link href="/list">Products</Link>
-          <Link href="/cart">Cart(1)</Link>
-          {isLoggedIn && hasShop && <Link href="/shop">Shop</Link>}
+        <div className="bg-lama text-white absolute left-0 top-0 w-screen h-screen flex flex-col gap-8 items-center justify-center text-3xl z-40">
+          <Link href="/" onClick={() => setOpen(false)}>
+            Homepage
+          </Link>
+          <Link href="/list" onClick={() => setOpen(false)}>
+            Products
+          </Link>
+          <Link href="/orders" onClick={() => setOpen(false)}>
+            Orders
+          </Link>
+          {isLoggedIn && (
+            <Link href="/shop" onClick={() => setOpen(false)}>
+              Shop
+            </Link>
+          )}
         </div>
       )}
     </div>
