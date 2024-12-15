@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import SearchBar from "./search-bar";
 import NavIcons from "./nav-icon";
-import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/utils/localStorage";
+import Menu from "./menu";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

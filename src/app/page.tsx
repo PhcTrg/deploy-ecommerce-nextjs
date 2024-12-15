@@ -1,6 +1,6 @@
 // import CategoryList from "@/components/category-list";
 import ProductList from "@/components/product-list";
-import Slider from "@/components/Slider";
+import { Slider } from "@nextui-org/react";
 import { Suspense } from "react";
 
 const HomePage = async () => {
