@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "@/config/config";
+import { getLocalStorage } from "@/utils/localStorage";
 
 class Cart {
   async addToCart(reqBody: IReqAddToCart): Promise<any> {
@@ -60,7 +61,7 @@ class Cart {
   }
 
   async updateCart(reqBody: IReqAddToCart): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/update`, {
       method: "PUT",

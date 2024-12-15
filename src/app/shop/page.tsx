@@ -20,6 +20,7 @@ import productAPIs from "@/api/product";
 import categoryAPIs from "@/api/category";
 import Image from "next/image";
 import orderAPIs from "@/api/order";
+import { getLocalStorage } from "@/utils/localStorage";
 
 const ShopPage = () => {
   const [shop, setShop] = useState<IResShop | null>(null);
@@ -58,7 +59,7 @@ const ShopPage = () => {
   ];
 
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("token") != null);
+    setIsLoggedIn(getLocalStorage("token") != null);
   }, []);
 
   useEffect(() => {

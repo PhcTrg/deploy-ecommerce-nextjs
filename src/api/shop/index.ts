@@ -1,8 +1,9 @@
 import { API_BASE_URL } from "@/config/config";
+import { getLocalStorage } from "@/utils/localStorage";
 
 class Shop {
   async getMyShop(): Promise<IResShop> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/shop/my-shop`, {
       method: "GET",
@@ -21,7 +22,7 @@ class Shop {
   }
 
   async createShop(reqBody: IReqCreateShop): Promise<IResShop> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/shop/add`, {
       method: "POST",
@@ -41,7 +42,7 @@ class Shop {
   }
 
   async updateShop(reqBody: IReqUpdateShop): Promise<IResShop> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/shop/update`, {
       method: "PUT",
