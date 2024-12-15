@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@nextui-org/react";
-import { MODE } from "../../page";
+import { MODE } from "../../types";
 import { useState } from "react";
 
 interface IRegisterPage {

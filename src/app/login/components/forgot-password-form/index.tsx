@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MODE } from "../../page";
+import { MODE } from "../../types";
 import { Button, Input } from "@nextui-org/react";
 import authAPIs from "@/api/auth";
 import ResultModal from "@/components/modal/result-modal";

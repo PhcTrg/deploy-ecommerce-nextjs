@@ -6,13 +6,7 @@ import { useState } from "react";
 import LoginForm from "./components/login-form";
 import RegisterFormComponent from "./components/register-form";
 import ForgotPasswordForm from "./components/forgot-password-form";
-
-export enum MODE {
-  LOGIN = "LOGIN",
-  REGISTER = "REGISTER",
-  RESET_PASSWORD = "RESET_PASSWORD",
-  SEND_EMAIL = "SEND_EMAIL",
-}
+import { MODE } from "./types";
 
 const LoginPage = () => {
   const router = useRouter();
