@@ -1,71 +1,122 @@
-import UpdateButton from "@/components/UpdateButton";
-import { updateUser } from "@/lib/actions";
-import { wixClientServer } from "@/lib/wixClientServer";
-import { members } from "@wix/members";
-import Link from "next/link";
-import { format } from "timeago.js";
+"use client";
 
-const ProfilePage = async () => {
-  try {
-    const wixClient = await wixClientServer();
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Avatar,
+  Input,
+  Button,
+  Divider,
+} from "@nextui-org/react";
+import authAPIs from "@/api/auth";
+import { useRouter } from "next/navigation";
 
-    const user = await wixClient.members.getCurrentMember({
-      fieldsets: [members.Set.FULL],
-    });
+const ProfilePage = () => {
+  const [user, setUser] = useState<IResGetUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
 
-    if (!user.member?.contactId) {
-      return <div className="">Not logged in!</div>;
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
     }
 
-    const orderRes = await wixClient.orders.searchOrders({
-      search: {
-        filter: { "buyerInfo.contactId": { $eq: user.member?.contactId } },
-      },
-    });
+    fetchUserData();
+  }, [router]);
 
+  const fetchUserData = async () => {
+    try {
+      const userData = await authAPIs.getCurrentUser();
+      setUser(userData);
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+      //   router.push("/login");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEditProfile = async () => {};
+
+  if (isLoading) {
     return (
-      <div className="flex flex-col md:flex-row gap-24 md:h-[calc(100vh-180px)] items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-        <div className="w-full md:w-1/2">
-          <h1 className="text-2xl">Profile</h1>
-          <form action={updateUser} className="mt-12 flex flex-col gap-4">
-            <input type="text" hidden name="id" value={user.member.contactId} />
-            <label className="text-sm text-gray-700">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder={user.member?.profile?.nickname || "john"}
-              className="ring-1 ring-gray-300 rounded-md p-2 max-w-96"
-            />
-            {/* Other form fields */}
-            <UpdateButton />
-          </form>
-        </div>
-        <div className="w-full md:w-1/2">
-          <h1 className="text-2xl">Orders</h1>
-          <div className="mt-12 flex flex-col">
-            {orderRes.orders.map((order) => (
-              <Link
-                href={`/orders/${order._id}`}
-                key={order._id}
-                className="flex justify-between px-2 py-6 rounded-md hover:bg-green-50 even:bg-slate-100"
-              >
-                <span className="w-1/4">{order._id?.substring(0, 10)}...</span>
-                <span className="w-1/4">
-                  ${order.priceSummary?.subtotal?.amount}
-                </span>
-                {order._createdDate && (
-                  <span className="w-1/4">{format(order._createdDate)}</span>
-                )}
-                <span className="w-1/4">{order.status}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        Loading...
       </div>
     );
-  } catch (error: any) {
-    return <div className="text-red-500">Error: {error.message}</div>;
   }
+
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 py-8">
+      <Card className="max-w-3xl mx-auto">
+        <CardHeader className="flex gap-5 p-6">
+          <Avatar
+            name={`${user.first_name[0]}${user.last_name[0]}`}
+            size="lg"
+            className="bg-primary-200 text-white"
+          />
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-semibold">{`${user.first_name} ${user.last_name}`}</h1>
+            <p className="text-gray-500">{user.email}</p>
+          </div>
+        </CardHeader>
+        <Divider />
+        <CardBody className="p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              label="First Name"
+              value={user.first_name}
+              readOnly
+              variant="bordered"
+            />
+            <Input
+              label="Last Name"
+              value={user.last_name}
+              readOnly
+              variant="bordered"
+            />
+            <Input
+              label="Email"
+              value={user.email}
+              readOnly
+              variant="bordered"
+            />
+            <Input
+              label="Phone Number"
+              value={user.phone_number}
+              readOnly
+              variant="bordered"
+            />
+            <Input
+              label="Address"
+              value={user.address}
+              readOnly
+              variant="bordered"
+            />
+            <Input label="Role" value={user.role} readOnly variant="bordered" />
+          </div>
+
+          <div className="flex justify-end gap-2">
+            <Button
+              color="primary"
+              className="bg-lama"
+              onClick={() => handleEditProfile()}
+            >
+              Edit Profile
+            </Button>
+          </div>
+        </CardBody>
+      </Card>
+    </div>
+  );
 };
 
 export default ProfilePage;

@@ -1,8 +1,8 @@
 import { OAuthStrategy, createClient } from "@wix/sdk";
 import { collections, products } from "@wix/stores";
-import { orders } from "@wix/ecom";
+// import { orders } from "@wix/ecom";
 import { cookies } from "next/headers";
-import { members } from '@wix/members';
+// import { members } from '@wix/members';
 
 export const wixClientServer = async () => {
   let refreshToken;
@@ -10,14 +10,16 @@ export const wixClientServer = async () => {
   try {
     const cookieStore = cookies();
     refreshToken = JSON.parse(cookieStore.get("refreshToken")?.value || "{}");
-  } catch (e) {}
+  } catch (e) {
+    console.log("refreshToken tại wixClientServer lỗi: ", e);
+  }
 
   const wixClient = createClient({
     modules: {
       products,
       collections,
-      orders,
-      members,
+      // orders,
+      // members,
     },
     auth: OAuthStrategy({
       clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,

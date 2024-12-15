@@ -1,17 +1,9 @@
-import Filter from "@/components/Filter";
-import ProductList from "@/components/ProductList";
-import Skeleton from "@/components/Skeleton";
-import { wixClientServer } from "@/lib/wixClientServer";
+import Filter from "@/components/filter";
+import ProductList from "@/components/product-list";
 import Image from "next/image";
 import { Suspense } from "react";
 
 const ListPage = async ({ searchParams }: { searchParams: any }) => {
-  const wixClient = await wixClientServer();
-
-  const cat = await wixClient.collections.getCollectionBySlug(
-    searchParams.cat || "all-products"
-  );
-
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
       {/* CAMPAIGN */}
@@ -29,18 +21,21 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
           <Image src="/woman.png" alt="" fill className="object-contain" />
         </div>
       </div>
-      {/* FILTER */}
-      <Filter />
-      {/* PRODUCTS */}
-      <h1 className="mt-12 text-xl font-semibold">{cat?.collection?.name} For You!</h1>
-      <Suspense fallback={<Skeleton/>}>
-        <ProductList
-          categoryId={
-            cat.collection?._id || "00000000-000000-000000-000000000001"
-          }
-          searchParams={searchParams}
-        />
-      </Suspense>
+
+      {/* Main content area with filter and products */}
+      <div className="flex gap-8">
+        {/* Left side filter */}
+        <div className="w-1/4">
+          <Filter />
+        </div>
+
+        {/* Right side products */}
+        <div className="w-3/4">
+          <Suspense fallback={"Loading"}>
+            <ProductList searchParams={searchParams} />
+          </Suspense>
+        </div>
+      </div>
     </div>
   );
 };

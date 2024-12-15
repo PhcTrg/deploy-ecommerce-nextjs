@@ -9,20 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@wix/ecom": "^1.0.540",
-    "@wix/members": "^1.0.77",
-    "@wix/redirects": "^1.0.44",
-    "@wix/sdk": "^1.9.1",
-    "@wix/stores": "^1.0.141",
+    "@nextui-org/react": "^2.4.8",
+    "@wix/ecom": "^1.0.840",
+    "@wix/redirects": "^1.0.64",
+    "@wix/sdk": "^1.14.4",
+    "@wix/stores": "^1.0.287",
     "ecomstarter": "file:",
-    "isomorphic-dompurify": "^2.9.0",
+    "framer-motion": "^11.12.0",
+    "isomorphic-dompurify": "^2.16.0",
     "js-cookie": "^3.0.5",
     "next": "14.2.2",
     "react": "^18",
-    "react-confetti": "^6.1.0",
     "react-dom": "^18",
-    "timeago.js": "^4.0.2",
-    "zustand": "^4.5.2"
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

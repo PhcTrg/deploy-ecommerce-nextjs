@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "app-uploads-cdn.fera.ai",
       },
+      {
+        protocol: "https",
+        hostname: "d2sabl064492ta.cloudfront.net",
+      },
     ],
   },
 };
