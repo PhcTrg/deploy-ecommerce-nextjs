@@ -1,6 +1,6 @@
 "use client";
+import { MODE } from "@/components/login-content";
 import { Input } from "@nextui-org/react";
-import { MODE } from "../../page";
 import { useState } from "react";
 
 interface IRegisterPage {

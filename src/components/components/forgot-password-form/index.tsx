@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { MODE } from "../../page";
 import { Button, Input } from "@nextui-org/react";
 import authAPIs from "@/api/auth";
 import ResultModal from "@/components/modal/result-modal";
+import { MODE } from "@/components/login-content";
 
 interface IForgotPasswordForm {
   setMode: (val: MODE) => void;

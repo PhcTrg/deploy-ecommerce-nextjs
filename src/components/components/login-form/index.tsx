@@ -1,8 +1,8 @@
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
-import { MODE } from "../../page";
 import authAPIs from "@/api/auth";
 import { useRouter } from "next/navigation";
+import { MODE } from "@/components/login-content";
 
 interface ILoginPage {
   setMode: (val: MODE) => void;
