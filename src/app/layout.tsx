@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/nav-bar";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 import { WixClientContextProvider } from "@/context/wixContext";
 import { NextUIProvider } from "@nextui-org/react";
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SearchBar from "./search-bar";
 import NavIcons from "./nav-icon";
-import Menu from "./menu";
+import Menu from "./Menu";
 
 const Navbar = () => {
   const isLoggedIn = localStorage.getItem("token") != null ? true : false;
