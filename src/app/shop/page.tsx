@@ -32,7 +32,7 @@ const ShopPage = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
-  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [products, setProducts] = useState<IResShopProducts[]>([]);
   const [categories, setCategories] = useState<IResCategory[]>([]);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
@@ -56,6 +56,10 @@ const ShopPage = () => {
     "Delivering",
     "Completed",
   ];
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("token") != null);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {

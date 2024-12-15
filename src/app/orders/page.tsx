@@ -9,7 +9,11 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState<IMyOrder[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("token") != null);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {

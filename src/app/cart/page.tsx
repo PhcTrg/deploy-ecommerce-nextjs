@@ -16,8 +16,12 @@ const CartPage = () => {
   const [checkoutSuccess, setCheckoutSuccess] = useState<boolean>(false);
   const [checkoutMessage, setCheckoutMessage] = useState<string>("");
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
+  useEffect(() => {
+    // Check login status after component mounts
+    setIsLoggedIn(localStorage.getItem("token") != null);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -25,8 +29,8 @@ const CartPage = () => {
       return;
     }
 
-    fetchOrders();
-  }, [isLoggedIn, router, fetchOrders]);
+    getCartProducts();
+  }, [isLoggedIn, router]);
 
   const getCartProducts = async () => {
     try {
