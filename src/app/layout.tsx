@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/nav-bar";
 import Footer from "@/components/Footer";
-import { NextUIProvider } from "@nextui-org/react";
+import ClientProviders from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,11 +11,6 @@ export const metadata: Metadata = {
   title: "E-Commerce Application",
   description: "",
 };
-
-("use client");
-function Providers({ children }: { children: React.ReactNode }) {
-  return <NextUIProvider>{children}</NextUIProvider>;
-}
 
 export default function RootLayout({
   children,
@@ -25,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <ClientProviders>
           <NavBar />
           {children}
           <Footer />
-        </Providers>
+        </ClientProviders>
       </body>
     </html>
   );
