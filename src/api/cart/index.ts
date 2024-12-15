@@ -3,7 +3,7 @@ import { getLocalStorage } from "@/utils/localStorage";
 
 class Cart {
   async addToCart(reqBody: IReqAddToCart): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/add`, {
       method: "POST",
@@ -23,7 +23,7 @@ class Cart {
   }
 
   async viewCart(): Promise<IResViewCart> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/view`, {
       method: "POST",
@@ -42,7 +42,7 @@ class Cart {
   }
 
   async viewCartNumber(): Promise<IResViewCartNumber> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/viewNumber`, {
       method: "POST",
@@ -81,7 +81,7 @@ class Cart {
   }
 
   async removeFromCart(productId: string): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/remove/${productId}`, {
       method: "DELETE",
@@ -100,7 +100,7 @@ class Cart {
   }
 
   async checkout(shopId: string): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/cart/checkout/${shopId}`, {
       method: "POST",

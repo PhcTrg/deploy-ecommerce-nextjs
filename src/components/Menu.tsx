@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getLocalStorage } from "@/utils/localStorage";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
-  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(getLocalStorage("token") != null);
+  }, []);
 
   return (
     <div>

@@ -1,8 +1,9 @@
 import { API_BASE_URL } from "@/config/config";
+import { getLocalStorage } from "@/utils/localStorage";
 
 class Order {
   async getMyOrders(): Promise<IMyOrder[]> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
 
     const response = await fetch(`${API_BASE_URL}/order/my-orders`, {
       method: "GET",
@@ -21,7 +22,7 @@ class Order {
   }
 
   async getShopOrders(shop_id: string): Promise<IShopOrder[]> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
     const response = await fetch(`${API_BASE_URL}/order/shop/${shop_id}`, {
       method: "GET",
       headers: {
@@ -39,7 +40,7 @@ class Order {
   }
 
   async updateOrderStatus(orderId: string, status: string): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage("token");
     const response = await fetch(`${API_BASE_URL}/order/${orderId}/status`, {
       method: "PUT",
       headers: {
