@@ -1,12 +1,58 @@
 "use client";
 
-const LoginContent = () => {
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import LoginForm from "./components/login-form";
+import RegisterFormComponent from "./components/register-form";
+import ForgotPasswordForm from "./components/forgot-password-form";
+
+export enum MODE {
+  LOGIN = "LOGIN",
+  REGISTER = "REGISTER",
+  RESET_PASSWORD = "RESET_PASSWORD",
+  SEND_EMAIL = "SEND_EMAIL",
+}
+
+const LoginPage = () => {
+  const router = useRouter();
+  const [mode, setMode] = useState(MODE.LOGIN);
+  const isLoggedIn = false;
+
+  if (isLoggedIn) {
+    router.push("/");
+  }
+
+  const renderFormFields = () => {
+    switch (mode) {
+      case MODE.REGISTER:
+        return <RegisterFormComponent setMode={(val: MODE) => setMode(val)} />;
+      case MODE.LOGIN:
+        return <LoginForm setMode={(val: MODE) => setMode(val)} />;
+      case MODE.SEND_EMAIL:
+        return (
+          <ForgotPasswordForm
+            setMode={(val: MODE) => setMode(val)}
+            currentMode={MODE.SEND_EMAIL}
+          />
+        );
+      case MODE.RESET_PASSWORD:
+        return (
+          <ForgotPasswordForm
+            setMode={(val: MODE) => setMode(val)}
+            currentMode={MODE.RESET_PASSWORD}
+          />
+        );
+      default:
+        return <></>;
+    }
+  };
+
   return (
-    <div>
-      {/* Add your login form content here */}
-      <h1>Login Page</h1>
+    <div className="mt-10 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex items-center justify-center">
+      {renderFormFields()}
     </div>
   );
 };
 
-export default LoginContent;
+export default LoginPage;
