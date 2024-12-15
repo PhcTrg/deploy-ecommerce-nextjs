@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -14,6 +12,11 @@ export const metadata: Metadata = {
   description: "",
 };
 
+("use client");
+function Providers({ children }: { children: React.ReactNode }) {
+  return <NextUIProvider>{children}</NextUIProvider>;
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,11 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextUIProvider>
+        <Providers>
           <NavBar />
           {children}
           <Footer />
-        </NextUIProvider>
+        </Providers>
       </body>
     </html>
   );
