@@ -7,17 +7,21 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import CartModal from "./cart-modal";
 import cartAPIs from "@/api/cart";
+import { getLocalStorage, removeLocalStorage } from "@/utils/localStorage";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cartCount, setCartCount] = useState<number>(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
   const pathName = usePathname();
 
-  const isLoggedIn = localStorage.getItem("token") != null ? true : false;
+  useEffect(() => {
+    setIsLoggedIn(getLocalStorage("token") != null);
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) getCartNumber();
@@ -50,9 +54,8 @@ const NavIcons = () => {
 
   const handleLogout = async () => {
     setIsLoading(true);
-
-    localStorage.removeItem("token");
-
+    removeLocalStorage("token");
+    setIsLoggedIn(false);
     setIsLoading(false);
     setIsProfileOpen(false);
     router.push("/");
